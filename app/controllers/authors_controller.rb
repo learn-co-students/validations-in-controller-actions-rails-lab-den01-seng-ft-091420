@@ -1,20 +1,30 @@
 class AuthorsController < ApplicationController
   def show
     @author = Author.find(params[:id])
+    render json: @author
   end
 
   def new
+
   end
 
   def create
-    @author = Author.create!(author_params)
+    @author = Author.create(author_params)
 
-    redirect_to author_path(@author)
+    if @author.valid?
+
+      redirect_to author_path(@author)
+    
+    else
+
+    render :new
+
+    end
   end
 
   private
 
   def author_params
-    params.permit(:email, :name)
+    params.permit(:email, :name, :id)
   end
 end
